@@ -1,0 +1,40 @@
+---
+
+- name: create cni directories
+  file:
+    owner: root
+    group: root
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "/opt/cni"
+    - "/opt/cni/bin"
+    - "/opt/cni/run"
+    - "/opt/cni/config"
+    - "/opt/cni/scripts"
+
+- name: download cni
+  get_url:
+    url: "{{ cni_url_archive }}"
+    dest: "/tmp/{{ cni_archive }}"
+    checksum: "sha512:{{ cni_url_archive_checksum }}"
+  changed_when: false
+
+- name: extract cni
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ cni_archive }}"
+    dest: "/opt/cni/bin"
+    mode: 0755
+    owner: root
+    group: root
+    setype: bin_t
+    seuser: system_u
+    remote_src: yes
+  changed_when: false
+
+- name: cleanup
+  file:
+    path: "/tmp/{{ cni_archive }}"
+    state: "absent"
+  changed_when: false

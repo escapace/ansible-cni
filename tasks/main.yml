@@ -1,0 +1,7 @@
+---
+# tasks file for escapace.cni
+
+- include_tasks: cni.yml
+  when: ansible_os_family == "RedHat"
+  tags:
+  - run-cni
