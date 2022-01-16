@@ -29,7 +29,7 @@
     group: root
     setype: bin_t
     seuser: system_u
-    remote_src: yes
+    remote_src: true
   changed_when: false
 
 - name: cleanup
