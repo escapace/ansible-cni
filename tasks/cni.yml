@@ -12,7 +12,6 @@
     - "/opt/cni/bin"
     - "/opt/cni/run"
     - "/opt/cni/config"
-    - "/opt/cni/scripts"
 
 - name: download cni
   get_url:
