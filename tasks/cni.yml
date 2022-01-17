@@ -13,7 +13,7 @@
     - "/opt/cni/run"
     - "/opt/cni/config"
 
-- name: Find out what the remote machine's mounts are
+- name: check cni version
   ansible.builtin.slurp:
     src: /opt/cni/version
   register: cni_current_vesion
