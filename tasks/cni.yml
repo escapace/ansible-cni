@@ -1,7 +1,7 @@
 ---
 
 - name: create cni directories
-  file:
+  ansible.builtin.file:
     owner: root
     group: root
     path: "{{ item }}"
@@ -24,10 +24,13 @@
   when: cni_current_vesion.failed or cni_current_vesion['content'] | b64decode != cni_archive
   block:
     - name: download cni
-      get_url:
+      ansible.builtin.get_url:
         url: "{{ cni_url_archive }}"
         dest: "/tmp/{{ cni_archive }}"
         checksum: "sha512:{{ cni_url_archive_checksum }}"
+        mode: 0755
+        owner: root
+        group: root
 
     - name: extract cni
       ansible.builtin.unarchive:
@@ -41,7 +44,7 @@
         remote_src: true
 
     - name: cleanup
-      file:
+      ansible.builtin.file:
         path: "/tmp/{{ cni_archive }}"
         state: "absent"
 
