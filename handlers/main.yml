@@ -2,5 +2,5 @@
 # handlers file for escapace.cni
 
 - name: cni daemon-reload
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: true
