@@ -55,3 +55,17 @@
         owner: root
         group: root
         mode: '0644'
+
+- name: wrapper
+  ansible.builtin.template:
+    src: wrapper.j2
+    dest: "/opt/cni/bin/{{ item }}-eth1"
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - bridge
+    - ipvlan
+    - macvlan
+    - ptp
+    - vlan
