@@ -1,4 +1,4 @@
 ---
 # defaults file for escapace.cni
 
-cni_version: 1.0.0
+cni_version: 1.1.1

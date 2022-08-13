@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export CNI_IFNAME=eth1
+
+exec /opt/cni/bin/{{ item }} "${@}"
