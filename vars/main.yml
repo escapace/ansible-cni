@@ -8,6 +8,6 @@ cni_architecture_map:
   64-bit: amd64
 
 cni_architecture: "{{ cni_architecture_map[ansible_architecture] }}"
-cni_archive: "cni-plugins-linux-{{ cni_architecture }}-v{{ cni_version }}.tgz"
-cni_url_archive: "https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/{{ cni_archive }}"
-cni_url_archive_checksum: "https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/{{ cni_archive }}.sha512"
+cni_archive: cni-plugins-linux-{{ cni_architecture }}-v{{ cni_version }}.tgz
+cni_url_archive: https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/{{ cni_archive }}
+cni_url_archive_checksum: https://github.com/containernetworking/plugins/releases/download/v{{ cni_version }}/{{ cni_archive }}.sha512
