@@ -1,17 +1,16 @@
 ---
-
 - name: create cni directories
   ansible.builtin.file:
     owner: root
     group: root
     path: "{{ item }}"
     state: directory
-    mode: 0755
+    mode: "0755"
   with_items:
-    - "/opt/cni"
-    - "/opt/cni/bin"
-    - "/opt/cni/run"
-    - "/opt/cni/config"
+    - /opt/cni
+    - /opt/cni/bin
+    - /opt/cni/run
+    - /opt/cni/config
 
 - name: check cni version
   ansible.builtin.slurp:
@@ -26,17 +25,17 @@
     - name: download cni
       ansible.builtin.get_url:
         url: "{{ cni_url_archive }}"
-        dest: "/tmp/{{ cni_archive }}"
-        checksum: "sha512:{{ cni_url_archive_checksum }}"
-        mode: 0755
+        dest: /tmp/{{ cni_archive }}
+        checksum: sha512:{{ cni_url_archive_checksum }}
+        mode: "0755"
         owner: root
         group: root
 
     - name: extract cni
       ansible.builtin.unarchive:
-        src: "/tmp/{{ cni_archive }}"
-        dest: "/opt/cni/bin"
-        mode: 0755
+        src: /tmp/{{ cni_archive }}
+        dest: /opt/cni/bin
+        mode: "0755"
         owner: root
         group: root
         setype: bin_t
@@ -45,8 +44,8 @@
 
     - name: cleanup
       ansible.builtin.file:
-        path: "/tmp/{{ cni_archive }}"
-        state: "absent"
+        path: /tmp/{{ cni_archive }}
+        state: absent
 
     - name: write version
       ansible.builtin.copy:
@@ -54,15 +53,15 @@
         dest: /opt/cni/version
         owner: root
         group: root
-        mode: '0644'
+        mode: "0644"
 
 - name: wrapper
   ansible.builtin.template:
     src: wrapper.j2
-    dest: "/opt/cni/bin/{{ item }}-eth1"
+    dest: /opt/cni/bin/{{ item }}-eth1
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   loop:
     - bridge
     - ipvlan
