@@ -2,4 +2,4 @@
 # defaults file for escapace.cni
 
 # https://github.com/containernetworking/plugins/releases
-cni_version: 1.6.1
+cni_version: 1.6.2
