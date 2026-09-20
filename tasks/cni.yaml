@@ -12,15 +12,21 @@
     - /opt/cni/run
     - /opt/cni/config
 
-- name: check cni version
+- name: check whether the cni version file exists
+  ansible.builtin.stat:
+    path: /opt/cni/version
+  register: cni_version_file
+
+- name: read the cni version file
   ansible.builtin.slurp:
     src: /opt/cni/version
-  register: cni_current_vesion
-  changed_when: false
-  ignore_errors: true
+  when: cni_version_file.stat.exists
+  register: cni_current_version
 
 - name: install cni
-  when: cni_current_vesion.failed or cni_current_vesion['content'] | b64decode != cni_archive
+  when: >-
+    not cni_version_file.stat.exists
+    or (cni_current_version.content | default("") | b64decode) != cni_archive
   block:
     - name: download cni
       ansible.builtin.get_url:
@@ -42,7 +48,7 @@
         seuser: system_u
         remote_src: true
 
-    - name: cleanup
+    - name: remove downloaded cni archive
       ansible.builtin.file:
         path: /tmp/{{ cni_archive }}
         state: absent
